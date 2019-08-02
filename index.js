@@ -44,6 +44,13 @@ module.exports.subscribe = async (event) => {
       return;
     }
 
+    // Skip if the current status is working and the repo is not anvyl-gae-qa
+    const repoSource = build.source && build.source.repoSource;
+    const repoName = repoSource && repoSource.repoName;
+    if (build.status === 'WORKING' && repoName !== 'anvyl-gae-qa') {
+      return;
+    }
+
     const githubCommit = await module.exports.getGithubCommit(build, octokit);
 
     const message = await module.exports.createSlackMessage(build, githubCommit);
