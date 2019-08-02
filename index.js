@@ -24,7 +24,8 @@ module.exports.getGithubCommit = async (build, octokit) => {
     // return github commit
     return githubCommit;
   } catch (err) {
-    return err;
+    // return err;
+    return; // stop relaying error object
   }
 };
 
